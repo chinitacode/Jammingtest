@@ -1,7 +1,6 @@
 let accessToken = '';
-const client_id = '141316f87a3b470aa6cb7ffa3aa3e320';
-const redirect_uri = 'https://dreary-fold.surge.sh/';
-//const redirectURI = 'http://localhost:3000/'
+const client_id = '04e405c20a0c455c8def033ba8758d28';
+const redirect_uri = 'http://localhost:3000/'
 const Spotify = {
 
   getAccessToken() {
@@ -41,7 +40,8 @@ const Spotify = {
         name: track.name,
         artist: track.artists[0].name,
         album: track.album.name,
-        uri: track.uri // only by searching new songs will return songs with trackURIs
+        uri: track.uri, // only by searching new songs will return songs with trackURIs
+        imageUrl: track.album.images[0].url
       }));
     });
   },
@@ -71,8 +71,7 @@ const Spotify = {
             contentType: 'application/json',
             method: 'POST',
             body: JSON.stringify({uris: trackURIs}) //add tracks
-            //Get all the trackURIs of the playlist
-            //A comma-separated list of Spotify track URIs to add to a playlist.
+            //Get all the trackURIs of the playlist from adding from searchResults
           });
         });
 });

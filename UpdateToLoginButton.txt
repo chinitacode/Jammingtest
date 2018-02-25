@@ -1,0 +1,25 @@
+ have the initial landing page just have a button that goes to authorization flow
+
+
+```/**
+   * Determine whether access token has been granted and query Spotify for user info if so.
+   * This is to provide personalization on initial load from the Spotify authentication redirect.
+   */
+  componentWillMount() {
+    Spotify.tokenIsValid();
+    if (window.location.href.match(/access_token=([^&]*)/)) {
+      Spotify.parseToken();
+      this.getUserInfo();
+      this.setState({loggedIn: true});
+    } else if (localStorage.getItem('accessToken')) {
+      Spotify.getAccessToken();
+      this.getUserInfo();
+      this.setState({loggedIn: true});
+    } 
+  }
+```
+
+
+it would use `setState()` to use the user's state
+then `render` method would have
+`if (this.state.user) {`
