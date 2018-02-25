@@ -1,5 +1,5 @@
- have the initial landing page just have a button that goes to authorization flow
-
+have the initial landing page just have a button that goes to authorization flow
+Then post authorization have the input field
 
 ```/**
    * Determine whether access token has been granted and query Spotify for user info if so.
@@ -18,7 +18,7 @@
     } 
   }
 ```
-
+getUserInfo() is a method you would write yourself
 
 it would use `setState()` to use the user's state
 then `render` method would have

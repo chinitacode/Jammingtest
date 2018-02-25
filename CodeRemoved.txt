@@ -1,0 +1,54 @@
+            <SearchBar onSearch={this.search} />
+          <div className="App-playlist">
+            <SearchResults
+              onAdd={this.addTrack}
+              searchResults={this.state.searchResults} />
+            <Playlist
+              playlistName={this.state.playlistName}
+              onNameChange={this.updatePlaylistName}
+              playlistTracks={this.state.playlistTracks}
+              onRemove={this.removeTrack}
+              onSave={this.savePlaylist} />
+	      </div>
+		  
+		  
+	render() {
+    const spotifyLogin = (
+      <form>
+      <button>Login To Spotify</button>
+      </form>
+    );
+    return (
+      <div>
+        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <div className="App">
+         {spotifyLogin}  
+        </div>
+      </div>
+    );
+  }
+}
+
+
+  enter(e) {
+    if(e.key == 'Enter') {
+    this.search();
+    }
+  }
+
+  handleTermChange(e) {
+    this.setState({term: e.target.value});
+  }
+
+  render() {
+    return (
+      <div className="SearchBar">
+        <input
+          onChange={this.handleTermChange}
+          onKeyPress={this.enter}
+          placeholder="Enter A Song, Album, or Artist" />
+        <a onClick={this.search}>SEARCH</a>
+      </div>
+    );
+  }
+}
