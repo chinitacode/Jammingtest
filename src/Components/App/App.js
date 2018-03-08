@@ -5,10 +5,13 @@ import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
 
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+    getLogin: false,
     searchResults: [],
     playlistName: 'New Playlist',
     playlistTracks: []
@@ -18,12 +21,21 @@ class App extends React.Component {
   this.updatePlaylistName = this.updatePlaylistName.bind(this);
   this.savePlaylist = this.savePlaylist.bind(this);
   this.search = this.search.bind(this);
+  this.getLogin = this.getLogin.bind(this);
   }
 
   search(Term) {
     //Spotify.search return a promise which is the object containing tracks(and track.uri)
     //The data has to be received first to be ready to use
     Spotify.search(Term).then(tracks => this.setState({searchResults: tracks}));
+  }
+
+  getLogin(e) {
+    const accessToken = Spotify.getAccessToken();
+      this.setState({
+          getLogin: true
+        });
+    return accessToken;
   }
 
   addTrack(track) {
@@ -72,12 +84,15 @@ class App extends React.Component {
 
 
   render() {
-    return (
-      <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
-        <div className="App">
-          <SearchBar onSearch={this.search} />
-          <div className="App-playlist">
+    const spotifyLogin = (
+      <form action="#" onSubmit={this.getLogin}>
+        <button>Login To Spotify</button>
+      </form>
+);
+    const web = (
+      <form>
+            <SearchBar onSearch={this.search} />
+        <div className="App-playlist">
             <SearchResults
               onAdd={this.addTrack}
               searchResults={this.state.searchResults} />
@@ -87,9 +102,16 @@ class App extends React.Component {
               playlistTracks={this.state.playlistTracks}
               onRemove={this.removeTrack}
               onSave={this.savePlaylist} />
-          </div>
         </div>
-      </div>
+      </form>
+    );
+    return (
+      <div>
+        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <div className="App">
+            { this.state.getLogin ? web : spotifyLogin }
+        </div>
+     </div>
     );
   }
 }
